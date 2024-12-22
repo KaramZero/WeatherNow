@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
 }
 
@@ -55,14 +56,16 @@ dependencies {
 
     //Room DB
     implementation(libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
     //gson
     implementation(libs.gson)
 
     //Dagger - Hilt
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-    implementation(kotlin("reflect"))
+
 
 }

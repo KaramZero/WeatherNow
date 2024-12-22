@@ -27,7 +27,7 @@ inline fun <reified T> handleResponse(response: Response<T>): T {
             val baseResponse: BaseApiResponse = res as? BaseApiResponse
                 ?: throw TypeCastException("Response body (${T::class.java}) is not of type BaseApiResponse (${BaseApiResponse::class.java})")
 
-            if (baseResponse.cod == null) res
+            if (baseResponse.cod == 200) res
             else throw RequestNotCompletedException(baseResponse.message)
         } catch (e: Exception) {
             if (e is RemoteDataException)

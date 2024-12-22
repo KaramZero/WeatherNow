@@ -1,5 +1,6 @@
 package com.vodafone.data.repository
 
+import com.vodafone.core.domain.model.ForecastResponse
 import com.vodafone.core.domain.model.ViewState
 import com.vodafone.core.domain.model.WeatherResponse
 import com.vodafone.core.domain.repo.WeatherRepository
@@ -20,7 +21,14 @@ class WeatherRepositoryImpl @Inject constructor(
     override suspend fun getWeather(cityName: String): ViewState<WeatherResponse> = safeApiCall {
         val city = cityName.ifBlank { getCityName() }
         val res = remoteSource.getWeather(city)
-        insertCityName(city)
+        if (res.cod == 200) insertCityName(city)
+        res
+    }
+
+    override suspend fun getForecast(): ViewState<ForecastResponse> = safeApiCall {
+        val city = getCityName()
+        val res = remoteSource.getForecast(city)
+        if (res.cod == 200) insertCityName(city)
         res
     }
 

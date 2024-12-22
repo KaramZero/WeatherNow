@@ -17,6 +17,5 @@ data class WeatherResponse (
     @SerializedName("timezone"   ) var timezone   : Int?               = null,
     @SerializedName("id"         ) var id         : Int?               = null,
     @SerializedName("name"       ) var name       : String?            = null,
-    @SerializedName("cod"        ) var cod        : Int?               = null
 
-)
+) : BaseApiResponse()

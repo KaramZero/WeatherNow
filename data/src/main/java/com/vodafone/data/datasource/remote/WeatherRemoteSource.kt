@@ -15,4 +15,12 @@ class WeatherRemoteSource @Inject constructor(
                 apiKey = NetworkParams.API_KEY
             )
         )
+
+    suspend fun getForecast(cityName: String) =
+        handleResponse(
+            apiServices.getForecast(
+                cityName = cityName,
+                apiKey = NetworkParams.API_KEY
+            )
+        )
 }
