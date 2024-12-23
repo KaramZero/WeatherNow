@@ -65,7 +65,7 @@ fun handleException(ex: Exception, actionId: Int = -1): ViewState.Error {
         is UnknownHostException ->
             ViewState.Error(ErrorType.NetworkError(ex.message.toString()), actionId)
 
-        is SocketTimeoutException -> ViewState.Error(ErrorType.RequestTimeoutError)
+        is SocketTimeoutException -> ViewState.Error(ErrorType.RequestTimeoutError, actionId)
         else ->
             ViewState.Error(ErrorType.RequestNotCompletedError(ex.message), actionId)
     }

@@ -72,5 +72,11 @@ dependencies {
     // Coil
     implementation (libs.coil.compose)
 
+    testImplementation (libs.junit.jupiter.api)
+    testImplementation (libs.junit.jupiter.engine)
+    testImplementation (libs.mockito.core.v490)
+    testImplementation (libs.mockito.kotlin.v490)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.androidx.core.testing)
 
 }

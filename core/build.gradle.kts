@@ -75,4 +75,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
+    // My library
+    //implementation("com.vodafone.weathernow:weatherutils:1.0.0")
+
 }

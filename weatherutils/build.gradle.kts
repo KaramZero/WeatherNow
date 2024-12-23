@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("dagger.hilt.android.plugin")
-    id("kotlin-kapt")
+    id("maven-publish")
+
 }
 
 android {
-    namespace = "com.vodafone.data"
+    namespace = "com.vodafone.weatherutils"
     compileSdk = 34
 
     defaultConfig {
@@ -14,10 +14,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     buildTypes {
@@ -43,40 +39,29 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(project(":core"))
-    implementation(libs.androidx.junit.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.logging.interceptor)
+}
 
 
-    //Room DB
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.vodafone.weathernow"
+            artifactId = "weatherutils"
+            version = "1.0.0"
 
-    //gson
-    implementation(libs.gson)
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 
-    //Dagger - Hilt
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-
-
-    // Room Testing
-    testImplementation (libs.androidx.room.testing)
-
-
-    // Mockito
-    testImplementation (libs.mockito.core)
-    testImplementation (libs.mockito.kotlin)
-    testImplementation (libs.kotlinx.coroutines.test)
-    testImplementation (libs.mockito.inline)
-
+    repositories {
+        maven {
+            url = uri("$buildDir/repo")
+        }
+        mavenLocal()
+    }
 }

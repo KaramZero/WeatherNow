@@ -28,7 +28,7 @@ class CurrentWeatherViewModel @Inject constructor(
         getCurrentWeather()
     }
 
-    private fun getCurrentWeather() {
+    fun getCurrentWeather() {
         launchIO {
             _viewState.value = ViewState.Loading()
             getCurrentWeatherUseCase.invoke("").let {

@@ -17,8 +17,8 @@ import retrofit2.Response
  * @throws TypeCastException If the response body is not of the specified type [T].
  */
 @Throws(RemoteDataException::class)
-inline fun <reified T> handleResponse(response: Response<T>): T {
-    return if (response.isSuccessful) {
+inline fun <reified T> handleResponse(response: Response<T>?): T {
+    return if (response?.isSuccessful == true) {
         try {
             val res: T = response.body()
                 ?: throw EmptyResponseException("No data received from server : response.body() is null")
@@ -30,15 +30,15 @@ inline fun <reified T> handleResponse(response: Response<T>): T {
             if (baseResponse.cod == 200) res
             else throw RequestNotCompletedException(baseResponse.message)
         } catch (e: Exception) {
-            if (e is RemoteDataException)
+            if (e is RemoteDataException || e is TypeCastException)
                 throw e
             throw ParsingException("Error parsing response body : ${e.message}")
         }
 
     } else {
-        val errorMessage = response.message()
+        val errorMessage = response?.message()
 
-        throw when (response.code()) {
+        throw when (response?.code()) {
             400 -> BadRequestException(errorMessage)
             401 -> UnauthorizedException(errorMessage)
             403 -> ForbiddenException(errorMessage)
